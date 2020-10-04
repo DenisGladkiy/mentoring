@@ -9,6 +9,7 @@ import booking.service.TicketService;
 import booking.service.UserService;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class DefaultBookingFacade implements BookingFacade {
     private UserService userService;
@@ -48,7 +49,17 @@ public class DefaultBookingFacade implements BookingFacade {
     }
 
     @Override
+    public Ticket getTicket(int id){
+        return ticketService.getTicket(id);
+    }
+
+    @Override
     public void cancelTicket(int id) {
         ticketService.cancelTicket(id);
+    }
+
+    @Override
+    public List<Ticket> getBookedTickets(String userName, int pageSize, int pageNum) {
+        return ticketService.getBookedTickets(userName, pageSize, pageNum);
     }
 }

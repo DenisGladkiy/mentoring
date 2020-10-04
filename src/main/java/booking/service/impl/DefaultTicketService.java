@@ -6,7 +6,9 @@ import booking.model.Ticket;
 import booking.model.User;
 import booking.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.collections4.ListUtils;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class DefaultTicketService implements TicketService {
@@ -28,8 +30,20 @@ public class DefaultTicketService implements TicketService {
     }
 
     @Override
+    public Ticket getTicket(int id){
+        return ticketDao.read(String.valueOf(id));
+    }
+
+    @Override
     public void cancelTicket(int id) {
         ticketDao.delete(String.valueOf(id));
         log.info("Ticket with id " + id + " was cancelled");
+    }
+
+    @Override
+    public List<Ticket> getBookedTickets(String userName, int pageSize, int pageNum) {
+        List<Ticket> tickets = ticketDao.readAll(userName);
+        List<List<Ticket>> pages = ListUtils.partition(tickets, pageSize);
+        return pages.get(pageNum);
     }
 }

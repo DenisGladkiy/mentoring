@@ -3,6 +3,7 @@ package booking.dao;
 import booking.model.Event;
 import booking.model.Model;
 
+import java.util.List;
 import java.util.Map;
 
 public class EventDao implements Dao<Event> {
@@ -22,6 +23,11 @@ public class EventDao implements Dao<Event> {
     @Override
     public void delete(String name) {
         database.remove(NAMESPACE + name);
+    }
+
+    @Override
+    public List<Event> readAll(String name) {
+        throw new UnsupportedOperationException("Method not supported");
     }
 
     public void setDatabase(Map<String, Model> database) {
