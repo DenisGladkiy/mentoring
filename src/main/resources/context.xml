@@ -42,5 +42,11 @@
         <property name="initialValuesPath" value="${initial.values}"/>
     </bean>
 
+    <bean id="converter" class="booking.utils.Converter">
+        <property name="unmarshaller" ref="castorMarshaller"/>
+    </bean>
+
+    <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller"/>
+
     <context:property-placeholder location="classpath:local.properties"/>
 </beans>

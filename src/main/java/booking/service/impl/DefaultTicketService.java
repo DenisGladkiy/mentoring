@@ -3,11 +3,18 @@ package booking.service.impl;
 import booking.dao.Dao;
 import booking.model.Event;
 import booking.model.Ticket;
+import booking.model.Tickets;
 import booking.model.User;
 import booking.service.TicketService;
-import org.springframework.beans.factory.annotation.Autowired;
+import booking.utils.Converter;
 import org.apache.commons.collections4.ListUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -18,6 +25,16 @@ public class DefaultTicketService implements TicketService {
 
     @Autowired
     private Dao<Ticket> ticketDao;
+    @Autowired
+    private Converter converter;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
+    private TransactionTemplate transactionTemplate;
+
+    public DefaultTicketService() {
+        transactionTemplate = new TransactionTemplate(transactionManager);
+    }
 
     @Override
     public Ticket bookTicket(User user, Event event) {
@@ -30,7 +47,7 @@ public class DefaultTicketService implements TicketService {
     }
 
     @Override
-    public Ticket getTicket(int id){
+    public Ticket getTicket(int id) {
         return ticketDao.read(String.valueOf(id));
     }
 
@@ -45,5 +62,21 @@ public class DefaultTicketService implements TicketService {
         List<Ticket> tickets = ticketDao.readAll(userName);
         List<List<Ticket>> pages = ListUtils.partition(tickets, pageSize);
         return pages.get(pageNum);
+    }
+
+    @Override
+    public void preloadTickets() {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    Tickets tickets = (Tickets) converter
+                            .convertToObject("C:/projects/javaMentoring/src/main/resources/tickets.xml");
+                    tickets.getTickets().forEach(t -> ticketDao.create(t));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

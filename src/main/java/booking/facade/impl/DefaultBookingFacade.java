@@ -8,6 +8,7 @@ import booking.service.EventService;
 import booking.service.TicketService;
 import booking.service.UserService;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -61,5 +62,10 @@ public class DefaultBookingFacade implements BookingFacade {
     @Override
     public List<Ticket> getBookedTickets(String userName, int pageSize, int pageNum) {
         return ticketService.getBookedTickets(userName, pageSize, pageNum);
+    }
+
+    @Override
+    public void preloadTickets() throws IOException {
+        ticketService.preloadTickets();
     }
 }

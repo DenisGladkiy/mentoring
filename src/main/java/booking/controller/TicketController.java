@@ -2,10 +2,12 @@ package booking.controller;
 
 import booking.facade.BookingFacade;
 import booking.model.Event;
+import booking.model.Ticket;
 import booking.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +26,9 @@ public class TicketController {
     private BookingFacade bookingFacade;
 
     @GetMapping("/{id}")
-    public String getTicket(@PathVariable int id) {
-        bookingFacade.getTicket(id);
+    public String getTicket(@PathVariable int id, Model model) {
+        Ticket ticket = bookingFacade.getTicket(id);
+        model.addAttribute("ticket", ticket);
         return "ticket";
     }
 

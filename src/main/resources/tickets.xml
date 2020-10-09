@@ -1,0 +1,7 @@
+<tickets> 
+    <ticket id="101" place="1"/> 
+    <ticket id="122" place="22"/> 
+    <ticket id="134" place="34"/>
+    <ticket id="105" place="5"/>
+    <ticket id="102" place="2"/>
+</tickets>
