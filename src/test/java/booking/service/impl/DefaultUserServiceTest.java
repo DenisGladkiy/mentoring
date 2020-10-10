@@ -1,6 +1,7 @@
 package booking.service.impl;
 
 import booking.dao.UserDao;
+import booking.exception.ModelNotFoundException;
 import booking.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +31,7 @@ public class DefaultUserServiceTest {
     }
 
     @Test
-    public void shouldInvokeUserDaoRead() {
+    public void shouldInvokeUserDaoRead() throws ModelNotFoundException {
         when(userDao.read(USER_NAME)).thenReturn(new User(USER_NAME));
 
         testInstance.getUser(USER_NAME);
@@ -45,8 +46,8 @@ public class DefaultUserServiceTest {
         verify(userDao).delete(USER_NAME);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionIfUserNotFound() {
+    @Test(expected = ModelNotFoundException.class)
+    public void shouldThrowExceptionIfUserNotFound() throws ModelNotFoundException {
         when(userDao.read(USER_NAME)).thenReturn(null);
 
         testInstance.getUser(USER_NAME);

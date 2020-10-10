@@ -1,5 +1,6 @@
 package booking.facade.impl;
 
+import booking.exception.ModelNotFoundException;
 import booking.model.Event;
 import booking.model.User;
 import booking.service.EventService;
@@ -40,7 +41,7 @@ public class DefaultBookingFacadeTest {
     }
 
     @Test
-    public void shouldInvokeUserServiceGetUser() {
+    public void shouldInvokeUserServiceGetUser() throws ModelNotFoundException {
         testInstance.getUser(TEST_USER);
 
         verify(userService).getUser(TEST_USER);
@@ -56,7 +57,7 @@ public class DefaultBookingFacadeTest {
     }
 
     @Test
-    public void shouldInvokeEventServiceGetEvent() {
+    public void shouldInvokeEventServiceGetEvent() throws ModelNotFoundException {
         testInstance.getEvent(EVENT);
 
         verify(eventService).getEvent(EVENT);

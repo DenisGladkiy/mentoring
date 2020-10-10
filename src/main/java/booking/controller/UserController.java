@@ -1,5 +1,6 @@
 package booking.controller;
 
+import booking.exception.ModelNotFoundException;
 import booking.facade.BookingFacade;
 import booking.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class UserController {
     private BookingFacade bookingFacade;
 
     @GetMapping("/{name}")
-    public String getUser(@PathVariable String name, Model model) {
+    public String getUser(@PathVariable String name, Model model) throws ModelNotFoundException {
         User user = bookingFacade.getUser(name);
         model.addAttribute("user", user);
         return "user";

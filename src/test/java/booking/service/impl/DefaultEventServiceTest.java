@@ -1,6 +1,7 @@
 package booking.service.impl;
 
 import booking.dao.EventDao;
+import booking.exception.ModelNotFoundException;
 import booking.model.Event;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +34,7 @@ public class DefaultEventServiceTest {
     }
 
     @Test
-    public void shouldInvokeEventDaoRead() {
+    public void shouldInvokeEventDaoRead() throws ModelNotFoundException {
         when(eventDao.read(EVENT_NAME)).thenReturn(new Event(EVENT_NAME, LocalDate.now()));
 
         testInstance.getEvent(EVENT_NAME);
@@ -48,8 +49,8 @@ public class DefaultEventServiceTest {
         verify(eventDao).delete(EVENT_NAME);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionIfEventNotFound() {
+    @Test(expected = ModelNotFoundException.class)
+    public void shouldThrowExceptionIfEventNotFound() throws ModelNotFoundException {
         when(eventDao.read(EVENT_NAME)).thenReturn(null);
 
         testInstance.getEvent(EVENT_NAME);

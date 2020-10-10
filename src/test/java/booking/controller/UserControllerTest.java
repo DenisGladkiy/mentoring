@@ -1,5 +1,6 @@
 package booking.controller;
 
+import booking.exception.ModelNotFoundException;
 import booking.facade.BookingFacade;
 import booking.model.User;
 import org.junit.Before;
@@ -30,12 +31,12 @@ public class UserControllerTest {
     private UserController testInstance;
 
     @Before
-    public void setUp(){
+    public void setUp() throws ModelNotFoundException {
         when(bookingFacade.getUser(NAME)).thenReturn(user);
     }
 
     @Test
-    public void shouldAddUserToModel(){
+    public void shouldAddUserToModel() throws ModelNotFoundException {
         testInstance.getUser(NAME, model);
 
         verify(model).addAttribute("user", user);

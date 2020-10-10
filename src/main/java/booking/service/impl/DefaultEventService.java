@@ -1,6 +1,7 @@
 package booking.service.impl;
 
 import booking.dao.Dao;
+import booking.exception.ModelNotFoundException;
 import booking.model.Event;
 import booking.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,9 @@ public class DefaultEventService implements EventService {
     }
 
     @Override
-    public Event getEvent(String name) {
+    public Event getEvent(String name) throws ModelNotFoundException {
         return Optional.ofNullable(eventDao.read(name))
-                .orElseThrow(() -> new IllegalArgumentException("Event with name " + name + "not found"));
+                .orElseThrow(() -> new ModelNotFoundException("Event with name " + name + "not found"));
     }
 
     @Override

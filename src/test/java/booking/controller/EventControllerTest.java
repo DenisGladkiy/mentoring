@@ -1,5 +1,6 @@
 package booking.controller;
 
+import booking.exception.ModelNotFoundException;
 import booking.facade.BookingFacade;
 import booking.model.Event;
 import org.junit.Before;
@@ -32,12 +33,12 @@ public class EventControllerTest {
     private EventController testInstance;
 
     @Before
-    public void setUp() {
+    public void setUp() throws ModelNotFoundException {
         when(bookingFacade.getEvent(NAME)).thenReturn(event);
     }
 
     @Test
-    public void shouldAddEventToModel() {
+    public void shouldAddEventToModel() throws ModelNotFoundException {
         testInstance.getEvent(NAME, model);
 
         verify(model).addAttribute("event", event);

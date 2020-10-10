@@ -1,5 +1,6 @@
 package booking.facade;
 
+import booking.exception.ModelNotFoundException;
 import booking.model.Event;
 import booking.model.Ticket;
 import booking.model.User;
@@ -10,9 +11,9 @@ import java.util.List;
 
 public interface BookingFacade {
  User createUser(String name);
- User getUser(String name);
+ User getUser(String name) throws ModelNotFoundException;
  Event createEvent(String name, LocalDate date);
- Event getEvent(String name);
+ Event getEvent(String name) throws ModelNotFoundException;
  Ticket bookTicket(User user, Event event);
  Ticket getTicket(int id);
  void cancelTicket(int id);

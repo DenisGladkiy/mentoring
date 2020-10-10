@@ -1,5 +1,6 @@
 package booking.facade.impl;
 
+import booking.exception.ModelNotFoundException;
 import booking.facade.BookingFacade;
 import booking.model.Event;
 import booking.model.Ticket;
@@ -30,7 +31,7 @@ public class DefaultBookingFacade implements BookingFacade {
     }
 
     @Override
-    public User getUser(String name) {
+    public User getUser(String name) throws ModelNotFoundException {
         return userService.getUser(name);
     }
 
@@ -40,7 +41,7 @@ public class DefaultBookingFacade implements BookingFacade {
     }
 
     @Override
-    public Event getEvent(String name) {
+    public Event getEvent(String name) throws ModelNotFoundException {
         return eventService.getEvent(name);
     }
 

@@ -1,6 +1,7 @@
 package booking.service.impl;
 
 import booking.dao.Dao;
+import booking.exception.ModelNotFoundException;
 import booking.model.User;
 import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public User getUser(String name) {
+    public User getUser(String name) throws ModelNotFoundException {
         return Optional.ofNullable(userDao.read(name))
-                .orElseThrow(() -> new IllegalArgumentException("User with name " + name + "not found"));
+                .orElseThrow(() -> new ModelNotFoundException("User with name " + name + "not found"));
     }
 
     @Override
