@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -31,8 +32,9 @@ public class DatabasePostProcessor implements BeanPostProcessor {
                 e.printStackTrace();
             }
             BufferedReader reader = null;
+            URL url = getClass().getClassLoader().getResource(initialValuesPath);
             try {
-                reader = new BufferedReader(new FileReader(new File(initialValuesPath)));
+                reader = new BufferedReader(new FileReader(new File(url.getPath())));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
