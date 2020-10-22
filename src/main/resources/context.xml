@@ -40,9 +40,10 @@
 
     <bean class="booking.postprocessor.DatabasePostProcessor">
         <property name="initialValuesPath" value="${initial.values}"/>
+        <property name="ticketService" ref="ticketService"/>
     </bean>
 
-    <bean id="converter" class="booking.utils.Converter">
+    <bean id="converter" class="booking.utils.impl.XmlConverter">
         <property name="unmarshaller" ref="castorMarshaller"/>
     </bean>
 

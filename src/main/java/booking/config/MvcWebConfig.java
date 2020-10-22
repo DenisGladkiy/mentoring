@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -19,6 +20,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan("booking")
+@ImportResource("classpath:context.xml")
 public class MvcWebConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -42,7 +44,7 @@ public class MvcWebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(){
+    public PlatformTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         return transactionManager;
     }

@@ -46,7 +46,7 @@ public class EventControllerTest {
 
     @Test
     public void shouldInvokeBookingFacadeCreateEvent() {
-        testInstance.createUser(Map.of("eventname", NAME, "date", DATE));
+        testInstance.createEvent(Map.of("eventname", NAME, "date", DATE));
 
         verify(bookingFacade).createEvent(NAME, LocalDate.of(2010, 10, 10));
     }

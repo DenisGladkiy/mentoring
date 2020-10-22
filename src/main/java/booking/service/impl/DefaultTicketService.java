@@ -15,6 +15,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -70,8 +71,8 @@ public class DefaultTicketService implements TicketService {
             @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 try {
-                    Tickets tickets = (Tickets) converter
-                            .convertToObject("C:/projects/javaMentoring/src/main/resources/tickets.xml");
+                    URL url = getClass().getClassLoader().getResource("./tickets.xml");
+                    Tickets tickets = (Tickets) converter.convertToObject(url.getPath());
                     tickets.getTickets().forEach(t -> ticketDao.create(t));
                 } catch (IOException e) {
                     e.printStackTrace();

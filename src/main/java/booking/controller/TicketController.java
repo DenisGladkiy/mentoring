@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/ticket")
+@RequestMapping("/tickets")
 public class TicketController {
 
     @Autowired

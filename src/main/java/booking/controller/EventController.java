@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 @Controller
 @ControllerAdvice
-@RequestMapping("/event")
+@RequestMapping("/events")
 public class EventController {
     private static Logger log = Logger.getLogger(EventController.class.getName());
 
@@ -42,7 +42,7 @@ public class EventController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody Map<String, String> params){
+    public void createEvent(@RequestBody Map<String, String> params){
         bookingFacade.createEvent(params.get("eventname"), LocalDate.parse(params.get("date")));
     }
 
