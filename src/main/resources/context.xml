@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+    <context:annotation-config/>
+
+    <bean id="bookingFacade" class="booking.facade.impl.DefaultBookingFacade">
+        <constructor-arg name="userService" ref="userService"/>
+        <constructor-arg name="eventService" ref="eventService"/>
+        <constructor-arg name="ticketService" ref="ticketService"/>
+    </bean>
+
+    <bean id="userService" class="booking.service.impl.DefaultUserService"/>
+
+    <bean id="eventService" class="booking.service.impl.DefaultEventService"/>
+
+    <bean id="ticketService" class="booking.service.impl.DefaultTicketService"/>
+
+    <bean id="userDao" class="booking.dao.UserDao">
+        <property name="database" ref="database"/>
+    </bean>
+
+    <bean id="ticketDao" class="booking.dao.TicketDao">
+        <property name="database" ref="database"/>
+    </bean>
+
+    <bean id="eventDao" class="booking.dao.EventDao">
+        <property name="database" ref="database"/>
+    </bean>
+
+    <util:map id="database" map-class="java.util.HashMap" key-type="java.lang.String" value-type="booking.model.Model"/>
+
+    <bean class="booking.postprocessor.DatabasePostProcessor">
+        <property name="initialValuesPath" value="${initial.values}"/>
+        <property name="ticketService" ref="ticketService"/>
+    </bean>
+
+    <bean id="converter" class="booking.utils.impl.XmlConverter">
+        <property name="unmarshaller" ref="castorMarshaller"/>
+    </bean>
+
+    <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller"/>
+
+    <context:property-placeholder location="classpath:local.properties"/>
+</beans>
