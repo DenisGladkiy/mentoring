@@ -44,7 +44,7 @@ public class UserControllerTest {
 
     @Test
     public void shouldInvokeBookingFacadeCreateUser(){
-        testInstance.createUser(Collections.singletonMap("username", NAME));
+        testInstance.createUser(NAME);
 
         verify(bookingFacade).createUser(NAME);
     }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,8 +43,8 @@ public class EventController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createEvent(@RequestBody Map<String, String> params){
-        bookingFacade.createEvent(params.get("eventname"), LocalDate.parse(params.get("date")));
+    public void createEvent(@RequestParam(value="eventname") String eventname, @RequestParam(value="date") String date){
+        bookingFacade.createEvent(eventname, LocalDate.parse(date));
     }
 
     @ExceptionHandler(ModelNotFoundException.class)

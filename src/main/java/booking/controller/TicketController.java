@@ -40,7 +40,7 @@ public class TicketController {
         bookingFacade.bookTicket(user, event);
     }
 
-    @PostMapping
+    @PostMapping(value = "/cancel")
     @ResponseStatus(HttpStatus.OK)
     public void cancelTicket(@RequestBody Map<String, String> params) {
         bookingFacade.cancelTicket(Integer.parseInt(params.get("id")));
